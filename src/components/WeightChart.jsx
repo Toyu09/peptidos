@@ -1,20 +1,22 @@
 function WeightChart({ records = [] }) {
+  if (!records.length) {
+    return (
+      <div className="flex h-56 items-center justify-center text-sm text-slate-400">
+        Aún no tienes registros de peso.
+      </div>
+    );
+  }
 
-  const data =
-    records.length > 0
-      ? [...records].slice(0, 10).reverse()
-      : [
-          { weight: 75 },
-          { weight: 74.4 },
-          { weight: 73.8 },
-          { weight: 73 },
-          { weight: 72.5 },
-          { weight: 71.8 },
-          { weight: 71.2 },
-        ];
+  const data = [...records]
+    .sort(
+      (a, b) =>
+        new Date(`${a.date}T${a.time}`) -
+        new Date(`${b.date}T${b.time}`)
+    )
+    .slice(-10);
 
-  const weights = data.map(
-    (record) => Number(record.weight)
+  const weights = data.map((item) =>
+    Number(item.weight)
   );
 
   const max = Math.max(...weights) + 0.5;
@@ -23,16 +25,15 @@ function WeightChart({ records = [] }) {
   const width = 600;
   const height = 220;
 
-  const points = data.map((record, index) => {
-
+  const points = data.map((item, index) => {
     const x =
       data.length === 1
         ? width / 2
         : (index / (data.length - 1)) * width;
 
     const normalized =
-      (record.weight - min) /
-      (max - min);
+      (Number(item.weight) - min) /
+      (max - min || 1);
 
     const y =
       height -
@@ -42,7 +43,7 @@ function WeightChart({ records = [] }) {
     return {
       x,
       y,
-      weight: record.weight,
+      weight: item.weight,
     };
   });
 
@@ -53,53 +54,36 @@ function WeightChart({ records = [] }) {
     .join(" ");
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 h-64">
 
-      <div className="relative h-64">
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        preserveAspectRatio="none"
+        className="h-full w-full"
+      >
 
-        <div className="absolute inset-0 flex flex-col justify-between">
+        <path
+          d={path}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="text-emerald-500"
+        />
 
-          {[0, 1, 2, 3, 4].map((item) => (
-            <div
-              key={item}
-              className="border-t border-slate-100"
-            />
-          ))}
-
-        </div>
-
-        <svg
-          viewBox={`0 0 ${width} ${height}`}
-          preserveAspectRatio="none"
-          className="absolute inset-0 h-full w-full"
-        >
-
-          <path
-            d={path}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-emerald-500"
+        {points.map((point, index) => (
+          <circle
+            key={index}
+            cx={point.x}
+            cy={point.y}
+            r="6"
+            className="fill-white stroke-emerald-500"
+            strokeWidth="3"
           />
+        ))}
 
-          {points.map((point, index) => (
-
-            <circle
-              key={index}
-              cx={point.x}
-              cy={point.y}
-              r="6"
-              className="fill-white stroke-emerald-500"
-              strokeWidth="3"
-            />
-
-          ))}
-
-        </svg>
-
-      </div>
+      </svg>
 
     </div>
   );

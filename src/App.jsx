@@ -3,6 +3,7 @@ import { useState } from "react";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Weight from "./pages/Weight";
+import Treatment from "./pages/Treatment";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,6 +27,12 @@ function App() {
 
       {activePage === "peso" && (
         <Weight
+          onNavigate={setActivePage}
+        />
+      )}
+
+      {activePage === "tratamiento" && (
+        <Treatment
           onNavigate={setActivePage}
         />
       )}

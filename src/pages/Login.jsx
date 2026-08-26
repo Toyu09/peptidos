@@ -18,8 +18,6 @@ function Login({ onLogin }) {
 
       <div className="w-full max-w-md">
 
-        {/* LOGO */}
-
         <div className="mb-8 text-center">
 
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-600 text-2xl font-bold text-white">
@@ -31,12 +29,10 @@ function Login({ onLogin }) {
           </h1>
 
           <p className="mt-2 text-sm text-slate-500">
-            Lleva el control de tu evolución
+            Tu evolución, bajo control.
           </p>
 
         </div>
-
-        {/* CARD */}
 
         <div className="rounded-3xl border bg-white p-7 shadow-sm">
 
@@ -64,12 +60,12 @@ function Login({ onLogin }) {
                 setName(event.target.value)
               }
               placeholder="Ej. Brayan"
-              className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-500"
+              className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-emerald-500"
             />
 
             <button
               type="submit"
-              className="mt-5 w-full rounded-xl bg-emerald-600 py-3 font-semibold text-white transition hover:bg-emerald-700"
+              className="mt-5 w-full rounded-xl bg-emerald-600 py-3 font-semibold text-white hover:bg-emerald-700"
             >
               Entrar
             </button>
@@ -79,7 +75,7 @@ function Login({ onLogin }) {
         </div>
 
         <p className="mt-6 text-center text-xs text-slate-400">
-          PeptiTrack MVP
+          PeptiTrack · MVP
         </p>
 
       </div>

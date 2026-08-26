@@ -1,30 +1,28 @@
 function MobileNav({ activePage, onNavigate }) {
-
   const menu = [
     {
       id: "inicio",
       icon: "⌂",
       label: "Inicio",
+      enabled: true,
     },
     {
       id: "peso",
       icon: "⚖️",
       label: "Peso",
+      enabled: true,
     },
     {
       id: "tratamiento",
       icon: "💉",
       label: "Tratamiento",
+      enabled: true,
     },
     {
       id: "comida",
       icon: "🍽️",
       label: "Comida",
-    },
-    {
-      id: "bienestar",
-      icon: "😊",
-      label: "Bienestar",
+      enabled: false,
     },
   ];
 
@@ -33,35 +31,30 @@ function MobileNav({ activePage, onNavigate }) {
 
       <div className="flex justify-around">
 
-        {menu.map((item) => {
+        {menu.map((item) => (
+          <button
+            key={item.id}
+            disabled={!item.enabled}
+            onClick={() =>
+              item.enabled && onNavigate(item.id)
+            }
+            className={`flex flex-col items-center gap-1 px-2 py-2 text-xs ${
+              activePage === item.id
+                ? "text-emerald-600"
+                : item.enabled
+                ? "text-slate-400"
+                : "text-slate-300"
+            }`}
+          >
 
-          const disabled =
-            !["inicio", "peso"].includes(item.id);
+            <span className="text-lg">
+              {item.icon}
+            </span>
 
-          return (
-            <button
-              key={item.id}
-              disabled={disabled}
-              onClick={() => onNavigate(item.id)}
-              className={`flex flex-col items-center gap-1 px-2 py-2 text-xs ${
-                activePage === item.id
-                  ? "text-emerald-600"
-                  : disabled
-                  ? "text-slate-300"
-                  : "text-slate-400"
-              }`}
-            >
+            {item.label}
 
-              <span className="text-lg">
-                {item.icon}
-              </span>
-
-              {item.label}
-
-            </button>
-          );
-
-        })}
+          </button>
+        ))}
 
       </div>
 

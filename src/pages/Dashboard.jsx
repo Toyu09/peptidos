@@ -8,7 +8,6 @@ import WeightChart from "../components/WeightChart";
 import WeightModal from "../components/WeightModal";
 
 function Dashboard({ onNavigate }) {
-
   const [showWeightModal, setShowWeightModal] =
     useState(false);
 
@@ -58,26 +57,23 @@ function Dashboard({ onNavigate }) {
       },
     ]);
 
-  const sortedRecords =
-    [...weightRecords].sort(
-      (a, b) =>
-        new Date(`${b.date}T${b.time}`) -
-        new Date(`${a.date}T${a.time}`)
-    );
+  const sortedRecords = [...weightRecords].sort(
+    (a, b) =>
+      new Date(`${b.date}T${b.time}`) -
+      new Date(`${a.date}T${a.time}`)
+  );
 
   const currentWeight =
     sortedRecords[0]?.weight || 0;
 
   const initialWeight =
-    weightRecords.length > 0
-      ? weightRecords[0].weight
-      : currentWeight;
+    weightRecords[0]?.weight ||
+    currentWeight;
 
   const totalChange =
     currentWeight - initialWeight;
 
   const saveWeight = (record) => {
-
     setWeightRecords((current) => [
       ...current,
       {
@@ -106,7 +102,7 @@ function Dashboard({ onNavigate }) {
           <section className="mb-8">
 
             <p className="text-sm font-medium text-emerald-600">
-              Miércoles, 26 de agosto
+              Mi seguimiento
             </p>
 
             <h1 className="mt-1 text-3xl font-bold md:text-4xl">
@@ -114,12 +110,10 @@ function Dashboard({ onNavigate }) {
             </h1>
 
             <p className="mt-2 text-slate-500">
-              Lleva el control de tu evolución.
+              Aquí tienes un resumen de tu evolución.
             </p>
 
           </section>
-
-          {/* STATS */}
 
           <section className="grid gap-4 md:grid-cols-3">
 
@@ -138,15 +132,13 @@ function Dashboard({ onNavigate }) {
             />
 
             <StatCard
-              title="Registros"
-              value={weightRecords.length}
-              subtitle="Mediciones guardadas"
-              icon="📊"
+              title="Tratamiento"
+              value="Activo"
+              subtitle="Seguimiento"
+              icon="💉"
             />
 
           </section>
-
-          {/* CHART */}
 
           <section className="mt-6 rounded-3xl border bg-white p-6 shadow-sm">
 
@@ -159,7 +151,7 @@ function Dashboard({ onNavigate }) {
                 </h2>
 
                 <p className="mt-1 text-xs text-slate-400">
-                  Tus últimas mediciones
+                  Tus últimas mediciones.
                 </p>
 
               </div>
@@ -176,34 +168,62 @@ function Dashboard({ onNavigate }) {
             </div>
 
             <WeightChart
-              records={sortedRecords}
+              records={weightRecords}
             />
 
           </section>
 
-          {/* TREATMENT */}
+          <section className="mt-6 grid gap-6 md:grid-cols-2">
 
-          <section className="mt-6 rounded-3xl border bg-white p-6 shadow-sm">
+            <button
+              onClick={() =>
+                onNavigate("tratamiento")
+              }
+              className="rounded-3xl border bg-white p-6 text-left shadow-sm transition hover:-translate-y-1"
+            >
 
-            <div className="flex items-center justify-between">
-
-              <div>
-
-                <p className="text-xs text-slate-400">
-                  Tratamiento
-                </p>
-
-                <h2 className="mt-1 text-xl font-bold">
-                  Aún no registrado
-                </h2>
-
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-xl">
+                💉
               </div>
 
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-500">
-                Próximamente
-              </span>
+              <h2 className="mt-5 font-bold">
+                Tratamiento
+              </h2>
 
-            </div>
+              <p className="mt-2 text-sm text-slate-500">
+                Registra medicamentos, ML, dosis y cómo te has sentido.
+              </p>
+
+              <p className="mt-4 text-sm font-semibold text-emerald-600">
+                Ver tratamiento →
+              </p>
+
+            </button>
+
+            <button
+              onClick={() =>
+                onNavigate("peso")
+              }
+              className="rounded-3xl border bg-white p-6 text-left shadow-sm transition hover:-translate-y-1"
+            >
+
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 text-xl">
+                ⚖️
+              </div>
+
+              <h2 className="mt-5 font-bold">
+                Control de peso
+              </h2>
+
+              <p className="mt-2 text-sm text-slate-500">
+                Registra tu peso tantas veces como quieras.
+              </p>
+
+              <p className="mt-4 text-sm font-semibold text-emerald-600">
+                Ver historial →
+              </p>
+
+            </button>
 
           </section>
 

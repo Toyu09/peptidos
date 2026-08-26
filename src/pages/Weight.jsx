@@ -8,7 +8,6 @@ import WeightChart from "../components/WeightChart";
 import WeightModal from "../components/WeightModal";
 
 function Weight({ onNavigate }) {
-
   const [showModal, setShowModal] =
     useState(false);
 
@@ -58,13 +57,6 @@ function Weight({ onNavigate }) {
       },
       {
         id: 7,
-        weight: 71.6,
-        date: "2026-08-26",
-        time: "08:15",
-        note: "Antes del desayuno",
-      },
-      {
-        id: 8,
         weight: 71.2,
         date: "2026-08-26",
         time: "14:32",
@@ -72,12 +64,11 @@ function Weight({ onNavigate }) {
       },
     ]);
 
-  const sortedRecords =
-    [...records].sort(
-      (a, b) =>
-        new Date(`${b.date}T${b.time}`) -
-        new Date(`${a.date}T${a.time}`)
-    );
+  const sortedRecords = [...records].sort(
+    (a, b) =>
+      new Date(`${b.date}T${b.time}`) -
+      new Date(`${a.date}T${a.time}`)
+  );
 
   const currentWeight =
     sortedRecords[0]?.weight || 0;
@@ -91,7 +82,6 @@ function Weight({ onNavigate }) {
     currentWeight - initialWeight;
 
   const saveWeight = (record) => {
-
     setRecords((current) => [
       ...current,
       {
@@ -104,17 +94,14 @@ function Weight({ onNavigate }) {
   };
 
   const deleteRecord = (id) => {
-
     setRecords((current) =>
       current.filter(
         (record) => record.id !== id
       )
     );
-
   };
 
   const formatDate = (date) => {
-
     return new Date(
       `${date}T12:00:00`
     ).toLocaleDateString("es-CO", {
@@ -122,7 +109,6 @@ function Weight({ onNavigate }) {
       month: "long",
       year: "numeric",
     });
-
   };
 
   return (
@@ -138,8 +124,6 @@ function Weight({ onNavigate }) {
         <Header title="Peso" />
 
         <div className="mx-auto max-w-7xl p-5 pb-28 md:p-10">
-
-          {/* TITLE */}
 
           <section className="mb-8">
 
@@ -165,7 +149,7 @@ function Weight({ onNavigate }) {
                 onClick={() =>
                   setShowModal(true)
                 }
-                className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white"
+                className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
               >
                 + Registrar peso
               </button>
@@ -173,8 +157,6 @@ function Weight({ onNavigate }) {
             </div>
 
           </section>
-
-          {/* STATS */}
 
           <section className="grid gap-4 md:grid-cols-3">
 
@@ -201,8 +183,6 @@ function Weight({ onNavigate }) {
 
           </section>
 
-          {/* CHART */}
-
           <section className="mt-6 rounded-3xl border bg-white p-6 shadow-sm">
 
             <h2 className="font-semibold">
@@ -214,12 +194,10 @@ function Weight({ onNavigate }) {
             </p>
 
             <WeightChart
-              records={sortedRecords}
+              records={records}
             />
 
           </section>
-
-          {/* HISTORY */}
 
           <section className="mt-6 rounded-3xl border bg-white p-6 shadow-sm">
 

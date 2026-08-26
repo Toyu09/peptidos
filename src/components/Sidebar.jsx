@@ -1,30 +1,34 @@
 function Sidebar({ activePage, onNavigate }) {
-
   const menu = [
     {
       id: "inicio",
       icon: "⌂",
       label: "Inicio",
+      enabled: true,
     },
     {
       id: "peso",
       icon: "⚖️",
       label: "Peso",
+      enabled: true,
     },
     {
       id: "tratamiento",
       icon: "💉",
       label: "Tratamiento",
+      enabled: true,
     },
     {
       id: "comida",
       icon: "🍽️",
-      label: "Comida",
+      label: "Alimentación",
+      enabled: false,
     },
     {
       id: "bienestar",
       icon: "😊",
       label: "Bienestar",
+      enabled: false,
     },
   ];
 
@@ -51,35 +55,36 @@ function Sidebar({ activePage, onNavigate }) {
 
       <nav className="space-y-2">
 
-        {menu.map((item) => {
+        {menu.map((item) => (
+          <button
+            key={item.id}
+            disabled={!item.enabled}
+            onClick={() =>
+              item.enabled && onNavigate(item.id)
+            }
+            className={`flex w-full items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium transition ${
+              activePage === item.id
+                ? "bg-emerald-50 text-emerald-700"
+                : item.enabled
+                ? "text-slate-500 hover:bg-slate-50"
+                : "cursor-not-allowed text-slate-300"
+            }`}
+          >
 
-          const disabled =
-            !["inicio", "peso"].includes(item.id);
+            <span className="text-lg">
+              {item.icon}
+            </span>
 
-          return (
-            <button
-              key={item.id}
-              disabled={disabled}
-              onClick={() => onNavigate(item.id)}
-              className={`flex w-full items-center gap-4 rounded-xl px-4 py-3 text-sm font-medium transition ${
-                activePage === item.id
-                  ? "bg-emerald-50 text-emerald-700"
-                  : disabled
-                  ? "cursor-not-allowed text-slate-300"
-                  : "text-slate-500 hover:bg-slate-50"
-              }`}
-            >
+            {item.label}
 
-              <span className="text-lg">
-                {item.icon}
+            {!item.enabled && (
+              <span className="ml-auto text-[9px] uppercase">
+                Pronto
               </span>
+            )}
 
-              {item.label}
-
-            </button>
-          );
-
-        })}
+          </button>
+        ))}
 
       </nav>
 
@@ -92,11 +97,11 @@ function Sidebar({ activePage, onNavigate }) {
           </p>
 
           <p className="mt-2 text-2xl font-bold">
-            -3.8 kg
+            En seguimiento
           </p>
 
           <p className="mt-1 text-xs text-slate-400">
-            desde el inicio
+            Registra tus datos diariamente.
           </p>
 
         </div>

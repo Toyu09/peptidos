@@ -1,36 +1,25 @@
 import { useState } from "react";
 
-function WeightModal({
-  onClose,
-  onSave,
-}) {
-
+function WeightModal({ onClose, onSave }) {
   const now = new Date();
 
-  const today =
-    now.toISOString().split("T")[0];
+  const today = now
+    .toISOString()
+    .split("T")[0];
 
-  const currentTime =
-    now.toTimeString().slice(0, 5);
+  const currentTime = now
+    .toTimeString()
+    .slice(0, 5);
 
-  const [weight, setWeight] =
-    useState("");
-
-  const [date, setDate] =
-    useState(today);
-
-  const [time, setTime] =
-    useState(currentTime);
-
-  const [note, setNote] =
-    useState("");
+  const [weight, setWeight] = useState("");
+  const [date, setDate] = useState(today);
+  const [time, setTime] = useState(currentTime);
+  const [note, setNote] = useState("");
 
   const handleSubmit = (event) => {
-
     event.preventDefault();
 
-    const numericWeight =
-      Number(weight);
+    const numericWeight = Number(weight);
 
     if (
       !numericWeight ||
@@ -147,9 +136,6 @@ function WeightModal({
 
           <label className="text-sm font-medium">
             Nota
-            <span className="ml-1 text-xs font-normal text-slate-400">
-              (opcional)
-            </span>
           </label>
 
           <textarea
